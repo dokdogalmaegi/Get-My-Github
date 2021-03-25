@@ -1,23 +1,44 @@
 import React, { Component } from "react";
-import { Box, Button, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+import { Box, AppBar, Toolbar, Typography } from '@material-ui/core';
 import Form from './component/Form';
+import Icon from "./component/Icon"
 import "./App.scss";
 
 interface AppState {
-  name: string;
-  age: number;
+  result : any
 }
 
 class App extends Component<any, AppState> {
+  constructor(props) {
+    super(props);
 
-  state = { name: 'hong-gil-dong', age: 16 };
+    this.state = { result : '' };
+  }
+
+  componentDidUpdate(props, state) {
+    console.log(this.state.result);
+  }
+
+  cb = (url) => {
+    fetch(url)
+    .then(async (res) => {
+      if(!res.ok) {
+        throw new Error("404 not found");
+      }
+
+      let resultJson = await res.json();
+      this.setState({
+        result : resultJson
+      });
+
+    }).catch((e) => {
+      alert(e);
+    })
+  }
 
   render() {
-    const { name, age } = this.state;
-
-    chrome.identity.getProfileUserInfo((userInfo) => {
-      chrome.runtime.sendMessage({userInfo});
-    })
+    const { cb } = this;
+    const { result } = this.state;
 
     return (
       <Box width="400px" height="350px">
@@ -28,9 +49,12 @@ class App extends Component<any, AppState> {
             </Typography>
           </Toolbar>
         </AppBar>
-        <Form>
+        <Form getResult={cb}>
 
         </Form>
+        {
+          result != '' ? <Icon src={result.avatar_url} id={result.login} url={result.html_url} /> : <div />
+        }
       </Box>
     );
   }
