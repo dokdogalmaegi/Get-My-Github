@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Button, TextField } from '@material-ui/core';
+import ButtonCom from './ButtonCom'
+import Test from './Test'
 
 export interface FormState {
-	url : string
+	url : string,
+	test : boolean
 }
 
 class Form extends Component<any, FormState> {
@@ -10,7 +13,7 @@ class Form extends Component<any, FormState> {
 	constructor (props) {
 		super(props);
 
-		this.state = { url : '' };
+		this.state = { url : '', test : false };
 	}
 
 	handleUrl = (e) => {
@@ -18,10 +21,13 @@ class Form extends Component<any, FormState> {
 
 		this.setState({
 			url : `${originalUrl}${e.target.value}`
-		})		
+		})
 	}
 
-	
+	testCallback = (success: boolean) => {
+		console.log(success);
+		
+	}
 
 	render() {
 		const { handleUrl } = this;
@@ -29,12 +35,13 @@ class Form extends Component<any, FormState> {
 		const { url } = this.state;
 
 		return (
-			<form action={url} style={{padding : '10px 15px'}} onSubmit={(e) => {
+			<form action={url} style={{padding : '10px 15px', display : 'flex'}} onSubmit={(e) => {
 				getResult(url);
 				e.preventDefault();
-				}} >
+				}} name='submitForm' >
 				<TextField label="Your Github Id" fullWidth onChange={handleUrl} />
-				<Button type='submit' variant="contained" style={{float : 'right', marginTop : '10px'}}>Search</Button>
+				<ButtonCom cb={this.testCallback}></ButtonCom>
+				{/* <Test /> */}
 			</form>
 		);
 	}

@@ -5,14 +5,15 @@ import Icon from "./component/Icon"
 import "./App.scss";
 
 interface AppState {
-  result : any
+  result : any,
+  isload : boolean
 }
 
 class App extends Component<any, AppState> {
   constructor(props) {
     super(props);
 
-    this.state = { result : '' };
+    this.state = { result : '', isload : false };
   }
 
   componentDidUpdate(props, state) {
@@ -45,16 +46,18 @@ class App extends Component<any, AppState> {
         <AppBar position="static">
           <Toolbar variant="dense" style={{textAlign: 'right'}}>
             <Typography variant="h6">
-              News
+              Get My Github
             </Typography>
           </Toolbar>
         </AppBar>
-        <Form getResult={cb}>
+        <Box>
+          <Form getResult={cb}>
 
-        </Form>
-        {
-          result != '' ? <Icon src={result.avatar_url} id={result.login} url={result.html_url} /> : <div />
-        }
+          </Form>
+          {
+            result != '' ? <Icon src={result.avatar_url} id={result.login} url={result.html_url} /> : <div />
+          }
+        </Box>
       </Box>
     );
   }
