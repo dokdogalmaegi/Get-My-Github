@@ -5,33 +5,33 @@ export interface IconState {
 
 }
 
-class Icon extends React.Component<any, IconState> {
-    render() {
-        const { src, id, url } = this.props;
+class Icon extends Component<any, IconState> {
+  render() {
+    const { src, id, url } = this.props;
 
-        console.log(src);
+    console.log(src);
 
-        return (
-            <Card>
-                <CardActionArea component="a" target="_blank" href={url}>
-                    <CardMedia image={src} title="Contemplative Reptile" style={{height : '140px'}}/>
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {id}
-                         </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary">
-                        Share
-                    </Button>
-                    <Button size="small" color="primary">
-                        Learn More
-                    </Button>
-                </CardActions>
-            </Card>
-        );
-    }
+    return (
+      <Card>
+        <CardActionArea component="a" target="_blank" href={url}>
+          <CardMedia image={src} title="Contemplative Reptile" style={{ height: '140px' }} />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {id}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Button size="small" color="primary">
+            followers
+          </Button>
+          <Button size="small" color="primary">
+            following
+          </Button>
+        </CardActions>
+      </Card>
+    );
+  }
 }
 
 export default Icon;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Button, TextField } from '@material-ui/core';
-import ButtonCom from './ButtonCom'
-import Test from './Test'
+import { TextField } from '@material-ui/core';
+import ButtonCom from './ButtonCom';
 
 export interface FormState {
 	url : string,
@@ -21,12 +20,7 @@ class Form extends Component<any, FormState> {
 
 		this.setState({
 			url : `${originalUrl}${e.target.value}`
-		})
-	}
-
-	testCallback = (success: boolean) => {
-		console.log(success);
-		
+		});
 	}
 
 	render() {
@@ -40,8 +34,7 @@ class Form extends Component<any, FormState> {
 				e.preventDefault();
 				}} name='submitForm' >
 				<TextField label="Your Github Id" fullWidth onChange={handleUrl} />
-				<ButtonCom cb={this.testCallback}></ButtonCom>
-				{/* <Test /> */}
+				<ButtonCom />
 			</form>
 		);
 	}

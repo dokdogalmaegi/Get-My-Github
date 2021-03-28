@@ -24,7 +24,7 @@ class App extends Component<any, AppState> {
     fetch(url)
     .then(async (res) => {
       if(!res.ok) {
-        throw new Error("404 not found");
+        throw new Error("404 not found(유저를 찾을 수 없습니다.)");
       }
 
       let resultJson = await res.json();
