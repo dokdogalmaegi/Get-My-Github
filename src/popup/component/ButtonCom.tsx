@@ -4,7 +4,8 @@ import React from 'react';
 const useStyles = makeStyles({
   submitBtn: {
     float: 'right',
-    marginTop: '10px'
+    marginTop: '10px',
+    marginLeft: '10px'
   }
 });
 

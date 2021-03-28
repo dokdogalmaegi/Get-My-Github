@@ -1,23 +1,21 @@
 import React, { Component } from "react";
 import { Box, AppBar, Toolbar, Typography } from '@material-ui/core';
+import Menu from './component/Menu';
 import Form from './component/Form';
 import Icon from "./component/Icon"
 import "./App.scss";
 
 interface AppState {
   result : any,
-  isload : boolean
+  followersLoad : boolean,
+  followingLoad : boolean
 }
 
 class App extends Component<any, AppState> {
   constructor(props) {
     super(props);
 
-    this.state = { result : '', isload : false };
-  }
-
-  componentDidUpdate(props, state) {
-    console.log(this.state.result);
+    this.state = { result : '', followersLoad : false, followingLoad : false };
   }
 
   cb = (url) => {
@@ -37,27 +35,31 @@ class App extends Component<any, AppState> {
     })
   }
 
+  handleCb = () => {
+    this.setState({
+      followersLoad : true
+    });
+
+    console.log(this.state.followersLoad);
+  }
+
   render() {
-    const { cb } = this;
-    const { result } = this.state;
+    const { cb, handleCb } = this;
+    const { result, followersLoad, followingLoad } = this.state;
 
     return (
       <Box width="400px" height="350px">
-        <AppBar position="static">
-          <Toolbar variant="dense" style={{textAlign: 'right'}}>
-            <Typography variant="h6">
-              Get My Github
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Box>
-          <Form getResult={cb}>
-
-          </Form>
+        <Menu />
+        {!followersLoad || !followingLoad ? 
+          <Box>
+          <Form getResult={cb} />
           {
-            result != '' ? <Icon src={result.avatar_url} id={result.login} url={result.html_url} /> : <div />
+            result != '' ? <Icon src={result.avatar_url} id={result.login} url={result.html_url} followers={result.followers} following={result.following} testCb={handleCb} /> : <div />
           }
-        </Box>
+          </Box>
+          : (
+          <h1>test</h1>
+        )};
       </Box>
     );
   }
