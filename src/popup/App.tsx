@@ -1,21 +1,25 @@
 import React, { Component } from "react";
-import { Box, AppBar, Toolbar, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import Menu from './component/Menu';
 import Form from './component/Form';
 import Icon from "./component/Icon"
 import "./App.scss";
 
+enum DisplayType {
+  Followers = "FOLLOWERS",
+  Following = "FOLLWING",
+}
+
 interface AppState {
   result : any,
-  followersLoad : boolean,
-  followingLoad : boolean
+  displayType : DisplayType
 }
 
 class App extends Component<any, AppState> {
   constructor(props) {
     super(props);
 
-    this.state = { result : '', followersLoad : false, followingLoad : false };
+    this.state = { result : '', displayType : null };
   }
 
   cb = (url) => {
@@ -35,31 +39,35 @@ class App extends Component<any, AppState> {
     })
   }
 
-  handleCb = () => {
+  handleFollowersCb = () => {
     this.setState({
-      followersLoad : true
+      displayType : DisplayType.Followers
     });
+  }
 
-    console.log(this.state.followersLoad);
+  handleFollowingCb = () => {
+    this.setState({
+      displayType : DisplayType.Following
+    });
   }
 
   render() {
-    const { cb, handleCb } = this;
-    const { result, followersLoad, followingLoad } = this.state;
-
+    const { cb, handleFollowersCb, handleFollowingCb } = this;
+    const { result, displayType } = this.state;
+    
     return (
       <Box width="400px" height="350px">
         <Menu />
-        {!followersLoad || !followingLoad ? 
+        {!displayType && 
           <Box>
           <Form getResult={cb} />
           {
-            result != '' ? <Icon src={result.avatar_url} id={result.login} url={result.html_url} followers={result.followers} following={result.following} testCb={handleCb} /> : <div />
+            result != '' ? <Icon src={result.avatar_url} id={result.login} url={result.html_url} followers={result.followers} following={result.following} follwersCB={handleFollowersCb} followingCB={handleFollowingCb} /> : <div />
           }
           </Box>
-          : (
-          <h1>test</h1>
-        )};
+        }
+        {displayType == DisplayType.Followers && <h1>test1</h1>}
+        {displayType == DisplayType.Following && <h1>test2</h1>}
       </Box>
     );
   }
