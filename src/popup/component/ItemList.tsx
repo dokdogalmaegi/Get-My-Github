@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Box } from '@material-ui/core';
+import Item from './Item';
  
 export interface ItemListState {
   result : []
@@ -17,7 +18,11 @@ class ItemList extends Component<any, ItemListState> {
 
     return ( 
       <Box>
-
+        {items.forEach(res => {
+          return (
+            <Item url={res.url} src={res.avatar_url} />
+          )
+        })}
       </Box>
     );
   }

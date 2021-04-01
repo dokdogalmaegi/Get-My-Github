@@ -13,26 +13,28 @@ enum DisplayType {
 
 interface AppState {
   result : any,
-  displayType : DisplayType
+  displayType : DisplayType,
+  callBackUrl : string
 }
 
 class App extends Component<any, AppState> {
   constructor(props) {
     super(props);
 
-    this.state = { result : '', displayType : null };
+    this.state = { result : '', displayType : null, callBackUrl : null};
   }
 
   Searchcb = (url) => {
     fetch(url)
     .then(async (res) => {
       if(!res.ok) {
-        throw new Error("404 not found(유저를 찾을 수 없습니다.)");
+        throw new Error("404 not found");
       }
 
       let resultJson = await res.json();
       this.setState({
-        result : resultJson
+        result : resultJson,
+        callBackUrl : url
       });
 
     }).catch((e) => {
@@ -40,11 +42,13 @@ class App extends Component<any, AppState> {
     })
   }
 
-  followersSearchCb = (url) => {
+  followersSearchCb = () => {
+    const { callBackUrl : url } = this.state;
+    console.log(`${url}/followers`);
     fetch(`${url}/followers`)
     .then(async (res) => {
       if(!res.ok) {
-        throw new Error("404 not found(유저를 찾을 수 없습니다.");
+        throw new Error("404 not found");
       }
 
       let resultJson = await res.json();
