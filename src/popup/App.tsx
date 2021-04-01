@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box } from '@material-ui/core';
+import { Box, LinearProgress } from '@material-ui/core';
 import Menu from './component/Menu';
 import Form from './component/Form';
 import Icon from "./component/Icon";
@@ -13,6 +13,7 @@ enum DisplayType {
 
 interface AppState {
   result : any,
+  resultF : any,
   displayType : DisplayType,
   callBackUrl : string
 }
@@ -21,7 +22,7 @@ class App extends Component<any, AppState> {
   constructor(props) {
     super(props);
 
-    this.state = { result : '', displayType : null, callBackUrl : null};
+    this.state = { result : '', resultF : null, displayType : null, callBackUrl : null};
   }
 
   Searchcb = (url) => {
@@ -53,7 +54,7 @@ class App extends Component<any, AppState> {
 
       let resultJson = await res.json();
       this.setState({
-        result : resultJson
+        resultF : resultJson
       });
     }).catch((e) => {
       alert(e);
@@ -74,7 +75,7 @@ class App extends Component<any, AppState> {
 
   render() {
     const { Searchcb, handleFollowersCb, handleFollowingCb, followersSearchCb } = this;
-    const { result, displayType } = this.state;
+    const { result, displayType, resultF } = this.state;
     
     return (
       <Box width="400px" height="350px">
@@ -87,8 +88,8 @@ class App extends Component<any, AppState> {
           }
           </Box>
         }
-        {displayType == DisplayType.Followers && 
-          <ItemList items={result} ></ItemList>
+        {displayType == DisplayType.Followers &&
+          <ItemList items={resultF} ></ItemList> 
         }
         {displayType == DisplayType.Following && <h1>test2</h1>}
       </Box>
