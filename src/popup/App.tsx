@@ -45,7 +45,7 @@ class App extends Component<any, AppState> {
 
   followersSearchCb = () => {
     const { callBackUrl : url } = this.state;
-    console.log(`${url}/followers`);
+    
     fetch(`${url}/followers`)
     .then(async (res) => {
       if(!res.ok) {

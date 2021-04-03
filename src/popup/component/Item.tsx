@@ -1,7 +1,7 @@
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
-import React, { Component } from 'react';
+import React from 'react';
 
-export default function Item( {src, url, id}) {
+export default function Item({ src, url, id, reposLength }) {
   return (
     <Card>
       <CardActionArea component="a" target="_blank" href={url}>
@@ -13,6 +13,9 @@ export default function Item( {src, url, id}) {
         </CardContent>
       </CardActionArea>
       <CardActions style={{ float: "right" }}>
+        <Button variant="outlined" size="small" color="primary">
+          repos {reposLength}
+        </Button>
       </CardActions>
     </Card>
   )

@@ -1,42 +1,61 @@
 import React, { Component } from 'react';
 import { Box, LinearProgress } from '@material-ui/core';
 import Item from './Item';
- 
+
 export interface ItemListState {
-  result : []
+  result: []
 }
- 
+
+let reposLength:Array<number> = [];
+
+const repos = (url) => {
+  fetch(url)
+    .then(async (res) => {
+      if (!res.ok) {
+        throw new Error("404 not found");
+      }
+
+      let resultJson = await res.json();
+
+      console.log(`resultJson.length : ${resultJson.length}`);
+
+      await reposLength.push(resultJson.length);
+    }).catch((e) => {
+      alert(e);
+    });
+}
+
 class ItemList extends Component<any, ItemListState> {
   constructor(props) {
     super(props);
 
-    this.state = { result : [] };
+    this.state = { result: [] };
   }
 
-  render() { 
+  render() {
     const { items } = this.props;
-    
-    // for(let i = 0; i < items.length; i ++) {
-    //   console.log(items[0].avatar_url);
-    // }
-    console.log(items)
-    let elem = (<LinearProgress/>);
-    if(items) {
+
+    let elem = (<LinearProgress />);
+    if (items) {
       elem = items.map((user, i) => {
-        console.log(user);
-        return(
-          <Item src={user.avatar_url} url={user.html_url} id={user.login}></Item>
+        // reposLength.push(1);
+        repos(user.repos_url);
+
+        console.log(`${reposLength}`);
+
+        return (
+          <Item src={user.avatar_url} url={user.html_url} id={user.login} reposLength={reposLength[i]}></Item>
         )
       })
     }
-    
-    
-    return ( 
+
+
+    return (
       <Box>
         {elem}
       </Box>
     );
   }
 }
- 
+
 export default ItemList;
