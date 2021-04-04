@@ -15,11 +15,9 @@ const repos = (url) => {
         throw new Error("404 not found");
       }
 
-      let resultJson = await res.json();
-
-      console.log(`resultJson.length : ${resultJson.length}`);
-
-      await reposLength.push(resultJson.length);
+      await res.json().then(msg => {
+        reposLength.push(msg.length);
+      });      
     }).catch((e) => {
       alert(e);
     });
@@ -38,13 +36,18 @@ class ItemList extends Component<any, ItemListState> {
     let elem = (<LinearProgress />);
     if (items) {
       elem = items.map((user, i) => {
-        // reposLength.push(1);
         repos(user.repos_url);
 
-        console.log(`${reposLength}`);
+        console.log(reposLength);
+
+        for (let idx in reposLength) {
+          console.log(`idx : ${idx}`);
+        }
+
+        console.log(reposLength[0]);
 
         return (
-          <Item src={user.avatar_url} url={user.html_url} id={user.login} reposLength={reposLength[i]}></Item>
+          <Item src={user.avatar_url} url={user.html_url} id={user.login} reposLength={0}></Item>
         )
       })
     }
