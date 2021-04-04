@@ -22,14 +22,9 @@ class ItemList extends Component<any, ItemListState> {
     this.state = { result: [], isLoaded: false };
   }
 
-  componentDidMount() {
-    
-  }
-
   componentDidUpdate() {
     const { items } = this.props;
-    if(this.state.isLoaded) return;
-    console.log(this.state);
+    if (this.state.isLoaded) return;
     if (items) {
       Promise.all(items.map(async (user, i) => {
         const reposLength = await repos(user.repos_url);
@@ -51,8 +46,7 @@ class ItemList extends Component<any, ItemListState> {
           {this.state.result}
         </Box>
       );
-    }
-    else {
+    } else {
       return (
         <Box>
           <LinearProgress/>
