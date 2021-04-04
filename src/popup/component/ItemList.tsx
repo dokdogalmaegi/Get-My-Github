@@ -3,61 +3,62 @@ import { Box, LinearProgress } from '@material-ui/core';
 import Item from './Item';
 
 export interface ItemListState {
-  result: []
+  result: any,
+  isLoaded: boolean
 }
 
-let reposLength:Array<number> = [];
-
-const repos = (url) => {
-  fetch(url)
-    .then(async (res) => {
-      if (!res.ok) {
-        throw new Error("404 not found");
-      }
-
-      await res.json().then(msg => {
-        reposLength.push(msg.length);
-      });      
-    }).catch((e) => {
-      alert(e);
-    });
+const repos = async (url) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error("404 not found");
+  }
+  return (await res.json()).length;
 }
 
 class ItemList extends Component<any, ItemListState> {
   constructor(props) {
     super(props);
 
-    this.state = { result: [] };
+    this.state = { result: [], isLoaded: false };
+  }
+
+  componentDidMount() {
+    
+  }
+
+  componentDidUpdate() {
+    const { items } = this.props;
+    if(this.state.isLoaded) return;
+    console.log(this.state);
+    if (items) {
+      Promise.all(items.map(async (user, i) => {
+        const reposLength = await repos(user.repos_url);
+
+        return (
+          <Item src={user.avatar_url} url={user.html_url} id={user.login} reposLength={reposLength}></Item>
+        )
+      })).then((result) => {
+        console.log(result);
+        this.setState({result: result, isLoaded: true});
+      });
+    }
   }
 
   render() {
-    const { items } = this.props;
-
-    let elem = (<LinearProgress />);
-    if (items) {
-      elem = items.map((user, i) => {
-        repos(user.repos_url);
-
-        console.log(reposLength);
-
-        for (let idx in reposLength) {
-          console.log(`idx : ${idx}`);
-        }
-
-        console.log(reposLength[0]);
-
-        return (
-          <Item src={user.avatar_url} url={user.html_url} id={user.login} reposLength={0}></Item>
-        )
-      })
+    if(this.state.isLoaded) {
+      return (
+        <Box>
+          {this.state.result}
+        </Box>
+      );
     }
-
-
-    return (
-      <Box>
-        {elem}
-      </Box>
-    );
+    else {
+      return (
+        <Box>
+          <LinearProgress/>
+        </Box>
+      )
+    }
   }
 }
 
