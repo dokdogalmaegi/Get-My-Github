@@ -20,10 +20,10 @@ class Icon extends Component<any, IconState> {
           </CardContent>
         </CardActionArea>
         <CardActions style={{float: "right"}}>
-          <Button variant="outlined" size="small" color="primary" onClick={() => {follwersCB(); getResultF();}}>
+          <Button variant="outlined" size="small" color="primary" onClick={() => {follwersCB(); getResultF('followers'); }}>
             followers {followers}
           </Button>
-          <Button variant="outlined" size="small" color="primary" onClick={followingCB}>
+          <Button variant="outlined" size="small" color="primary" onClick={() => {followingCB(); getResultF('following'); }}>
             following {following}
           </Button>
         </CardActions>

@@ -33,7 +33,6 @@ class ItemList extends Component<any, ItemListState> {
           <Item src={user.avatar_url} url={user.html_url} id={user.login} reposLength={reposLength}></Item>
         )
       })).then((result) => {
-        console.log(result);
         this.setState({result: result, isLoaded: true});
       });
     }
