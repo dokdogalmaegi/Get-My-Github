@@ -7,7 +7,7 @@ export interface IconState {
 
 class Icon extends Component<any, IconState> {
   render() {
-    const { src, id, url, followers, following, follwersCB, followingCB, getResultF } = this.props;
+    const { src, id, url, followers, following, getResultF, followCB } = this.props;
 
     return (
       <Card>
@@ -20,10 +20,10 @@ class Icon extends Component<any, IconState> {
           </CardContent>
         </CardActionArea>
         <CardActions style={{float: "right"}}>
-          <Button variant="outlined" size="small" color="primary" onClick={() => {follwersCB(); getResultF('followers'); }}>
+          <Button variant="outlined" size="small" color="primary" onClick={() => {followCB('followers'); getResultF('followers'); }}>
             followers {followers}
           </Button>
-          <Button variant="outlined" size="small" color="primary" onClick={() => {followingCB(); getResultF('following'); }}>
+          <Button variant="outlined" size="small" color="primary" onClick={() => {followCB(''); getResultF('following'); }}>
             following {following}
           </Button>
         </CardActions>

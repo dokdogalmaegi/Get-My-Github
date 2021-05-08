@@ -8,22 +8,23 @@ import "./App.scss";
 
 enum DisplayType {
   Followers = "FOLLOWERS",
-  Following = "FOLLWING",
-  default = "DEFAULT"
+  Following = "FOLLWING",  
+  Default = "DEFAULT"
 }
 
 interface AppState {
   result : any,
   resultF : any,
   displayType : DisplayType,
-  callBackUrl : string
+  callBackUrl : string,
+  foundFg : Boolean
 }
 
 class App extends Component<any, AppState> {
   constructor(props) {
     super(props);
 
-    this.state = { result : '', resultF : null, displayType : DisplayType.default, callBackUrl : null};
+    this.state = { result : '', resultF : null, displayType : DisplayType.Default, callBackUrl : null, foundFg : false };
   }
 
   Searchcb = (url) => {
@@ -36,11 +37,15 @@ class App extends Component<any, AppState> {
       let resultJson = await res.json();
       this.setState({
         result : resultJson,
-        callBackUrl : url
+        callBackUrl : url,
+        foundFg : false
       });
 
     }).catch((e) => {
       alert(e);
+      this.setState({
+        foundFg : true
+      });
     })
   }
 
@@ -77,37 +82,33 @@ class App extends Component<any, AppState> {
   }
 
   handleHomeCb = () => {
-    console.log('test');
-
     this.setState({
-      displayType : DisplayType.default
+      displayType : DisplayType.Default
     });
   }
 
-  handleFollowersCb = () => {
+  handleFollowCb = (type) => {
+    (type == 'followers') ?
     this.setState({
       displayType : DisplayType.Followers
-    });
-  }
-
-  handleFollowingCb = () => {
+    }) :
     this.setState({
       displayType : DisplayType.Following
     });
   }
 
   render() {
-    const { Searchcb, handleFollowersCb, handleFollowingCb, followSearchCb, handleHomeCb } = this;
-    const { result, displayType, resultF } = this.state;
+    const { Searchcb, followSearchCb, handleFollowCb, handleHomeCb } = this;
+    const { result, displayType, resultF, foundFg } = this.state;
     
     return (
       <Box width="400px" height="350px">
         <Menu goHomeCb={handleHomeCb} />
-        {displayType == DisplayType.default && 
+        {displayType == DisplayType.Default && 
           <Box>
           <Form getResult={Searchcb} />
           {
-            result != '' ? <Icon src={result.avatar_url} id={result.login} url={result.html_url} followers={result.followers} following={result.following} follwersCB={handleFollowersCb} followingCB={handleFollowingCb} getResultF={followSearchCb} /> : <div />
+            result != '' && !foundFg ? <Icon src={result.avatar_url} id={result.login} url={result.html_url} followers={result.followers} following={result.following} followCB={handleFollowCb} getResultF={followSearchCb} /> : (foundFg) ? <img src="notFound.png" alt="404_not_found_image" width="400px" height="350px" /> : <div />
           }
           </Box>
         }
@@ -116,7 +117,7 @@ class App extends Component<any, AppState> {
         }
         {displayType == DisplayType.Following &&
           <ItemList items={resultF} ></ItemList> 
-        }
+        }        
       </Box>
     );
   }
