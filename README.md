@@ -1,1 +1,3 @@
-# My First chrome Extention
+# Get My Github
+- 크롬 확장프로그램으로 깃허브 유저를 검색할 수 있습니다.
+- 유저를 검색 후 팔로우, 팔로잉 현황을 알 수 있습니다.
