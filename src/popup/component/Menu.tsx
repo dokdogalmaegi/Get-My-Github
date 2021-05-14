@@ -1,5 +1,6 @@
 import { AppBar, IconButton, makeStyles, Toolbar, Typography, Button } from '@material-ui/core';
 import Home from '@material-ui/icons/Home';
+import koreaJson from '../../textJson/korea.json';
 import React from 'react';
 
 const useStyles = makeStyles({
@@ -17,11 +18,12 @@ export default function Menu({ goHomeCb }) {
     <AppBar position="static">
       <Toolbar variant="dense" className={classes.toolBar}>
         <Typography variant="h6">
-          Get My Github
+          { koreaJson.title }
         </Typography>
         <IconButton color="primary" component="span" onClick={ goHomeCb }>
           <Home style={{ color: 'white' }} />
         </IconButton>
+
       </Toolbar>
     </AppBar>
   );
