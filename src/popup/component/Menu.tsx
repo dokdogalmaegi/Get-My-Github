@@ -2,13 +2,18 @@ import { AppBar, IconButton, makeStyles, Toolbar, Typography, Button } from '@ma
 import Home from '@material-ui/icons/Home';
 import korean from '../../textJson/korea.json';
 import english from '../../textJson/english.json';
-import React, { useState } from 'react';
+import React from 'react';
 
 const useStyles = makeStyles({
   toolBar: {
     textAlign: 'right',
     display: 'flex',
     flexGrow: 1
+  },
+  langBtn: {
+    color: 'white',
+    position: 'fixed',
+    right: '2%'
   }
 })
 
@@ -24,8 +29,8 @@ export default function Menu({ goHomeCb, selectLang, changeLang }) {
         <IconButton color="primary" component="span" onClick={ goHomeCb }>
           <Home style={{ color: 'white' }} />
         </IconButton>
-        {selectLang == korean && <button onClick={ changeLang }>{ selectLang.language }</button>}
-        {selectLang == english && <button onClick={ changeLang }>{ selectLang.language }</button>}
+        {selectLang == korean && <Button onClick={ changeLang } className={ classes.langBtn }>{ selectLang.language }</Button>}
+        {selectLang == english && <Button onClick={ changeLang } className={ classes.langBtn }>{ selectLang.language }</Button>}
       </Toolbar>
     </AppBar>
   );

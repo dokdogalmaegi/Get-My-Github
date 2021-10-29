@@ -9,10 +9,10 @@ const useStyles = makeStyles({
   }
 });
 
-export default function ButtonCom() {
+export default function ButtonCom({ selectLang }) {
   const classes = useStyles();
 
   return ( 
-    <Button type='submit' variant="contained" className={ classes.submitBtn }>Search</Button>
+    <Button type='submit' variant="contained" className={ classes.submitBtn }>{ selectLang.search }</Button>
   );
 }

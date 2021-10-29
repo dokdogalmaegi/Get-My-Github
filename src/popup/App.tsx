@@ -119,17 +119,17 @@ class App extends Component<any, AppState> {
         <Menu goHomeCb={handleHomeCb} selectLang={selectLang} changeLang={handleSelectLangCb} />
         {displayType == DisplayType.Default && 
           <Box>
-          <Form getResult={Searchcb} />
+          <Form getResult={Searchcb} selectLang={selectLang} />
           {
-            result != '' && !foundFg ? <Icon src={result.avatar_url} id={result.login} url={result.html_url} followers={result.followers} following={result.following} followCB={handleFollowCb} getResultF={followSearchCb} /> : (foundFg) ? <img src="notFound.png" alt="404_not_found_image" width="400px" height="350px" /> : <div />
+            result != '' && !foundFg ? <Icon src={result.avatar_url} id={result.login} url={result.html_url} followers={result.followers} following={result.following} followCB={handleFollowCb} getResultF={followSearchCb} selectLang={selectLang} /> : (foundFg) ? <img src="notFound.png" alt="404_not_found_image" width="400px" height="350px" /> : <div />
           }
           </Box>
         }
         {displayType == DisplayType.Followers &&
-          <ItemList items={resultF} ></ItemList> 
+          <ItemList items={resultF} selectLang={selectLang} ></ItemList> 
         }
         {displayType == DisplayType.Following &&
-          <ItemList items={resultF} ></ItemList> 
+          <ItemList items={resultF} selectLang={selectLang} ></ItemList>
         }        
       </Box>
     );

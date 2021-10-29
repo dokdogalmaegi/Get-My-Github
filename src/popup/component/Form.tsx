@@ -25,7 +25,7 @@ class Form extends Component<any, FormState> {
 
 	render() {
 		const { handleUrl } = this;
-		const { getResult } = this.props;
+		const { getResult, selectLang } = this.props;
 		const { url } = this.state;
 
 		return (
@@ -33,8 +33,8 @@ class Form extends Component<any, FormState> {
 				getResult(url);
 				e.preventDefault();
 				}} name='submitForm' >
-				<TextField label="Your Github Id" fullWidth onChange={handleUrl} />
-				<ButtonCom />
+				<TextField label={ selectLang.inputLabel } fullWidth onChange={handleUrl} />
+				<ButtonCom selectLang={selectLang} />
 			</form>
 		);
 	}

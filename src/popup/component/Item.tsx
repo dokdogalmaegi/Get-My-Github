@@ -1,7 +1,7 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Link, Typography } from '@material-ui/core';
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 
-export default function Item({ src, url, id, reposLength }) {
+export default function Item({ src, url, id, reposLength, selectLang }) {
   const [reposUrl, setReposUrl] = useState(url+"?tab=repositories");
 
   return (
@@ -16,7 +16,7 @@ export default function Item({ src, url, id, reposLength }) {
       </CardActionArea>
       <CardActions style={{ float: "right" }}>
         <Button variant="outlined" size="small" color="primary" onClick={ () => { window.open(reposUrl, "_blank"); } }>
-          repos {reposLength}
+          { selectLang.repos } {reposLength}
         </Button>
       </CardActions>
     </Card>
