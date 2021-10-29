@@ -1,7 +1,9 @@
 {
     "language" : "한국어",
-    "title" : "내 깃헙 가져오기",
-    "LangSelect" : {
-        "selecterLanguage" : "언어"
-    }
+    "title" : "GitHub 프로필 검색기",
+    "search" : "검색",
+    "inputLabel" : "깃 허브 아이디를 입력해주세요.",
+    "repos" : "저장소",
+    "followers" : "팔로워",
+    "following" : "팔로잉"
 }

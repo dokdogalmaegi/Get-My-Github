@@ -1,7 +1,9 @@
 {
     "language" : "English",
     "title" : "Get My Github",
-    "LangSelect" : {
-        "selecterLanguage" : "Language"
-    }
+    "search" : "search",
+    "inputLabel" : "Your Github Id",
+    "repos" : "repos",
+    "followers" : "FOLLOWERS",
+    "following" : "FOLLOWING"
 }

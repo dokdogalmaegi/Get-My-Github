@@ -23,14 +23,14 @@ class ItemList extends Component<any, ItemListState> {
   }
 
   componentDidUpdate() {
-    const { items } = this.props;
+    const { items, selectLang } = this.props;
     if (this.state.isLoaded) return;
     if (items) {
       Promise.all(items.map(async (user, i) => {
         const reposLength = await repos(user.repos_url);
 
         return (
-          <Item src={user.avatar_url} url={user.html_url} id={user.login} reposLength={reposLength}></Item>
+          <Item src={user.avatar_url} url={user.html_url} id={user.login} reposLength={reposLength} selectLang={ selectLang }></Item>
         )
       })).then((result) => {
         this.setState({result: result, isLoaded: true});
